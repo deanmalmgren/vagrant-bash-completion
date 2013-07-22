@@ -25,9 +25,11 @@ __vagrantinvestigate() {
       #  stack until we come across a ./.vagrant. /home/igneous/proj/1
       #  will start at /home/igneous/proj because of our loop starting
       #  at 2.
+      echo "recursion depth: "$(__pwdln) > /dev/stderr
       for (( i=2; i<=$(__pwdln); i++ ));do
-         pwdmod2="${pwdmod2%/*}"
-         if [ -f "${pwdmod2}/.vagrant" -o -d "${pwdmod2}.vagrant" ];then
+         pwdmod2="${pwdmod2%/*}" # XXXX WHAT IS THIS SUPPOSED TO DO?
+	 echo "who are you pwdmod2? '"$pwdmod2"'" > /dev/stderr
+         if [ -f "${pwdmod2}/.vagrant" -o -d "${pwdmod2}/.vagrant" ];then
             echo "${pwdmod2}/.vagrant"
             return 0
          fi
